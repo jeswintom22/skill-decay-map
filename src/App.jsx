@@ -36,7 +36,6 @@ return (
   <Manifesto />
 </div>
 
-  </div>
 );
 
 }
