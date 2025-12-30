@@ -85,34 +85,56 @@ async function askAI(snapshot) {
   
 
 return (
-    <div>
-      <h1>Skill Decay Map</h1>
+    <div style={{
+      minHeight: '100vh',
+      padding: '2rem',
+      maxWidth: '1200px',
+      margin: '0 auto'
+    }}>
+      <header className="text-center mb-4">
+        <h1>Skill Decay Map</h1>
+        <p style={{
+          color: 'var(--text-muted)',
+          fontSize: '1.125rem',
+          maxWidth: '600px',
+          margin: '0 auto'
+        }}>
+          Visualize and track the natural decay of your skills over time.
+          Stay aware, stay sharp.
+        </p>
+      </header>
 
-      <AddSkill onAdd={handleAddSkill} />
+      <div className="grid">
+        <div className="card">
+          <h2>Add New Skill</h2>
+          <AddSkill onAdd={handleAddSkill} />
+        </div>
 
-      <TimeSlider
-        offsetDays={offsetDays}
-        setOffsetDays={setOffsetDays}
-      />
+        <div className="card">
+          <h2>Time Controls</h2>
+          <div className="flex-column">
+            <TimeSlider
+              offsetDays={offsetDays}
+              setOffsetDays={setOffsetDays}
+            />
+            <LensSelector
+              current={lensKey}
+              setCurrent={setLensKey}
+            />
+          </div>
+        </div>
+      </div>
 
-      <LensSelector
-        current={lensKey}
-        setCurrent={setLensKey}
-      />
+      <div className="panel" style={{ marginTop: '2rem' }}>
+        <h2 style={{ textAlign: 'center', marginBottom: '2rem' }}>Skill Map</h2>
+        <SkillMap skills={visibleSkills.filter((s) => !s.archived)} />
+      </div>
 
-      <div
-      style={{
-        marginTop: "2rem",
-        padding: "1.5rem",
-        background: "var(--panel)",
-        borderRadius: "12px",
-        border: "1px solid var(--border)",
-      }}
-    >
-      <SkillMap skills={visibleSkills.filter((s) => !s.archived)} />
-    </div>
-      <Graveyard skills={visibleSkills} />
-      <AIReflection snapshot={snapshot} askAI={askAI} />
+      <div className="grid" style={{ marginTop: '2rem' }}>
+        <Graveyard skills={visibleSkills} />
+        <AIReflection snapshot={snapshot} askAI={askAI} />
+      </div>
+
       <Interpretation notes={notes} />
       <Manifesto />
     </div>

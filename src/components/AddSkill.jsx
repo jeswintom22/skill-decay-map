@@ -24,32 +24,62 @@ export default function AddSkill({ onAdd }) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        placeholder="Skill name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
+    <form onSubmit={handleSubmit} className="flex-column">
+      <div className="form-group">
+        <label htmlFor="skill-name">Skill Name</label>
+        <input
+          id="skill-name"
+          placeholder="Enter skill name..."
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
+      </div>
 
-      <select value={importance} onChange={(e) => setImportance(e.target.value)}>
-        <option value="low">Low importance</option>
-        <option value="medium">Medium importance</option>
-        <option value="critical">Critical</option>
-      </select>
+      <div className="grid" style={{ gridTemplateColumns: '1fr 1fr' }}>
+        <div className="form-group">
+          <label htmlFor="importance">Importance</label>
+          <select
+            id="importance"
+            value={importance}
+            onChange={(e) => setImportance(e.target.value)}
+          >
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="critical">Critical</option>
+          </select>
+        </div>
 
-      <select value={decayRate} onChange={(e) => setDecayRate(e.target.value)}>
-        <option value="slow">Slow decay</option>
-        <option value="medium">Medium decay</option>
-        <option value="fast">Fast decay</option>
-      </select>
+        <div className="form-group">
+          <label htmlFor="decay-rate">Decay Rate</label>
+          <select
+            id="decay-rate"
+            value={decayRate}
+            onChange={(e) => setDecayRate(e.target.value)}
+          >
+            <option value="slow">Slow</option>
+            <option value="medium">Medium</option>
+            <option value="fast">Fast</option>
+          </select>
+        </div>
+      </div>
 
-      <select value={coreLevel} onChange={(e) => setCoreLevel(e.target.value)}>
-        <option value="peripheral">Peripheral</option>
-        <option value="important">Important</option>
-        <option value="core">Core</option>
-      </select>
+      <div className="form-group">
+        <label htmlFor="core-level">Core Level</label>
+        <select
+          id="core-level"
+          value={coreLevel}
+          onChange={(e) => setCoreLevel(e.target.value)}
+        >
+          <option value="peripheral">Peripheral</option>
+          <option value="important">Important</option>
+          <option value="core">Core</option>
+        </select>
+      </div>
 
-      <button type="submit">Add skill</button>
+      <button type="submit" className="primary" style={{ alignSelf: 'flex-start' }}>
+        Add Skill
+      </button>
     </form>
   );
 }
