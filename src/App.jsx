@@ -6,6 +6,8 @@ import {
 } from "./logic/skillLifecycle";
 import AddSkill from "./components/AddSkill";
 import SkillList from "./components/SkillList";
+import SkillMap from "./components/SkillMap";
+
 
 function App() {
   const [skills, setSkills] = useState(() => {
@@ -27,17 +29,16 @@ function App() {
     );
   }
 
-  return (
-    <div>
-      <h1>Skill Decay Map</h1>
+return (
+  <div>
+    <h1>Skill Decay Map</h1>
 
-      <AddSkill onAdd={handleAddSkill} />
+    <AddSkill onAdd={handleAddSkill} />
 
-      <hr />
+    <SkillMap skills={skills} />
+  </div>
+);
 
-      <SkillList skills={skills} onPractice={handlePractice} />
-    </div>
-  );
 }
 
 export default App;
