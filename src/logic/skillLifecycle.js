@@ -12,3 +12,14 @@ export function updateSkillStatus(skill) {
 export function updateAllSkills(skills) {
   return skills.map(updateSkillStatus);
 }
+export function markSkillPracticed(skills, skillId) {
+  return skills.map((skill) =>
+    skill.id === skillId
+      ? {
+          ...skill,
+          lastPracticed: new Date().toISOString(),
+          status: "green",
+        }
+      : skill
+  );
+}
