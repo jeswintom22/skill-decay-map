@@ -11,3 +11,13 @@ export function updateAllSkills(skills, now = new Date()) {
     return { ...skill, status, archived: false };
   });
 }
+
+export function applyLens(skill, lens) {
+  return {
+    ...skill,
+    _lens: lens.name,
+    importanceFactor: lens.importanceWeight,
+    coreShift: lens.coreBias,
+    decayFactor: lens.decayMultiplier,
+  };
+}

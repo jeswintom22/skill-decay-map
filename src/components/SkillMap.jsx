@@ -10,17 +10,23 @@ function sizeFromImportance(importance) {
   return 6;
 }
 
-function radiusFromCore(coreLevel) {
-  if (coreLevel === "core") return 60;
-  if (coreLevel === "important") return 120;
-  return 180;
+function radiusFromCore(coreLevel, shift = 0) {
+  let base;
+  if (coreLevel === "core") base = 60;
+  else if (coreLevel === "important") base = 120;
+  else base = 180;
+
+  return base + shift;
 }
 
 export default function SkillMap({ skills }) {
   const center = 200;
 
   return (
-    <svg width={400} height={400} style={{ border: "1px solid #ddd" }}>
+    <svg width={400} height={400} style={{display: "block",
+    margin: "0 auto",
+    background: "#fafafa",
+    borderRadius: "12px", }}>
         {/* Core rings */}
 <circle cx={center} cy={center} r={60} fill="none" stroke="#e5e7eb" />
 <circle cx={center} cy={center} r={120} fill="none" stroke="#e5e7eb" />
@@ -31,7 +37,11 @@ export default function SkillMap({ skills }) {
 
       {skills.map((skill, index) => {
         const angle = (index / skills.length) * 2 * Math.PI;
-        const r = radiusFromCore(skill.coreLevel);
+        const r = radiusFromCore(
+  skill.coreLevel,
+  skill.coreShift || 0
+);
+
 
         const x = center + r * Math.cos(angle);
         const y = center + r * Math.sin(angle);
