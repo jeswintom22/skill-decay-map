@@ -6,6 +6,7 @@ import {
 import AddSkill from "./components/AddSkill";
 import SkillList from "./components/SkillList";
 import SkillMap from "./components/SkillMap";
+import Manifesto from "./components/Manifesto";
 
 
 function App() {
@@ -28,10 +29,11 @@ return (
     <AddSkill onAdd={handleAddSkill} />
 
     <SkillMap skills={skills} />
-    <div style={{ marginTop: "1rem", fontSize: "0.9rem" }}>
+    {/* <div style={{ marginTop: "1rem", fontSize: "0.9rem" }}>
   <div>● Green: recently practiced</div>
   <div>● Yellow: soft decay</div>
-  <div>● Red: structural decay</div>
+  <div>● Red: structural decay</div> */}
+  <Manifesto />
 </div>
 
   </div>
