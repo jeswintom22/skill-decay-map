@@ -8,10 +8,12 @@ export default function SkillList({ skills, onPractice }) {
       {skills.map((skill) => (
         <li key={skill.id} style={{ marginBottom: "1rem" }}>
           <strong>{skill.name}</strong>
+
           <div>Status: {skill.status}</div>
-          <div>Importance: {skill.importance}</div>
-          <div>Decay rate: {skill.decayRate}</div>
-          <div>Core level: {skill.coreLevel}</div>
+          <div>
+            Last practiced:{" "}
+            {new Date(skill.lastPracticed).toLocaleString()}
+          </div>
 
           <button onClick={() => onPractice(skill.id)}>
             Mark as practiced

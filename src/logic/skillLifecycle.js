@@ -1,25 +1,13 @@
-// src/logic/skillLifecycle.js
+import { calculateDecayStatus, isDeepDecay } from "./decayEngine";
 
-import { calculateDecayStatus } from "./decayEngine";
+export function updateAllSkills(skills, now = new Date()) {
+  return skills.map((skill) => {
+    const status = calculateDecayStatus(skill, now);
 
-export function updateSkillStatus(skill) {
-  return {
-    ...skill,
-    status: calculateDecayStatus(skill),
-  };
-}
+    if (isDeepDecay(skill, now)) {
+      return { ...skill, archived: true };
+    }
 
-export function updateAllSkills(skills) {
-  return skills.map(updateSkillStatus);
-}
-export function markSkillPracticed(skills, skillId) {
-  return skills.map((skill) =>
-    skill.id === skillId
-      ? {
-          ...skill,
-          lastPracticed: new Date().toISOString(),
-          status: "green",
-        }
-      : skill
-  );
+    return { ...skill, status, archived: false };
+  });
 }
