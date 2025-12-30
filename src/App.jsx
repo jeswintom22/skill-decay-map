@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { loadSkills, saveSkills } from "./logic/storage";
 import {
-  updateAllSkills,
-  markSkillPracticed,
+  updateAllSkills
 } from "./logic/skillLifecycle";
 import AddSkill from "./components/AddSkill";
 import SkillList from "./components/SkillList";
@@ -22,13 +21,6 @@ function App() {
   function handleAddSkill(skill) {
     setSkills((prev) => updateAllSkills([...prev, skill]));
   }
-
-  function handlePractice(skillId) {
-    setSkills((prev) =>
-      updateAllSkills(markSkillPracticed(prev, skillId))
-    );
-  }
-
 return (
   <div>
     <h1>Skill Decay Map</h1>
@@ -36,6 +28,12 @@ return (
     <AddSkill onAdd={handleAddSkill} />
 
     <SkillMap skills={skills} />
+    <div style={{ marginTop: "1rem", fontSize: "0.9rem" }}>
+  <div>● Green: recently practiced</div>
+  <div>● Yellow: soft decay</div>
+  <div>● Red: structural decay</div>
+</div>
+
   </div>
 );
 

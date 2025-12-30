@@ -21,6 +21,11 @@ export default function SkillMap({ skills }) {
 
   return (
     <svg width={400} height={400} style={{ border: "1px solid #ddd" }}>
+        {/* Core rings */}
+<circle cx={center} cy={center} r={60} fill="none" stroke="#e5e7eb" />
+<circle cx={center} cy={center} r={120} fill="none" stroke="#e5e7eb" />
+<circle cx={center} cy={center} r={180} fill="none" stroke="#e5e7eb" />
+
       {/* center */}
       <circle cx={center} cy={center} r={4} fill="#111" />
 
@@ -32,15 +37,22 @@ export default function SkillMap({ skills }) {
         const y = center + r * Math.sin(angle);
 
         return (
-          <circle
-            key={skill.id}
-            cx={x}
-            cy={y}
-            r={sizeFromImportance(skill.importance)}
-            fill={STATUS_COLOR[skill.status]}
-          >
-            <title>{skill.name}</title>
-          </circle>
+         <circle
+  key={skill.id}
+  cx={x}
+  cy={y}
+  r={sizeFromImportance(skill.importance)}
+  fill={STATUS_COLOR[skill.status]}
+  stroke="#111"
+  strokeWidth={1}
+>
+  <title>
+    {skill.name}
+    {"\n"}
+    Status: {skill.status}
+  </title>
+</circle>
+
         );
       })}
     </svg>
