@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 const STATUS_COLOR = {
   green: "#10b981", // More vibrant green
   yellow: "#f59e0b", // Better yellow
@@ -25,8 +27,9 @@ function radiusFromCore(coreLevel, shift = 0) {
   return base + shift;
 }
 
-export default function SkillMap({ skills }) {
+export default function SkillMap({ skills, onMarkAsPracticed }) {
   const center = 250;
+  const [selectedSkill, setSelectedSkill] = useState(null);
 
   return (
     <div style={{ textAlign: 'center' }}>
@@ -87,6 +90,7 @@ export default function SkillMap({ skills }) {
                 fill={STATUS_COLOR[skill.status]}
                 stroke="#ffffff"
                 strokeWidth={3}
+                onClick={() => setSelectedSkill(skill)}
                 style={{
                   filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.2))",
                   cursor: "pointer"
@@ -157,6 +161,120 @@ export default function SkillMap({ skills }) {
           <span style={{ fontSize: '0.875rem', color: 'var(--text-muted)' }}>Critical</span>
         </div>
       </div>
+
+      {/* Skill Details Modal */}
+      {selectedSkill && (
+        <div
+          onClick={() => setSelectedSkill(null)}
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100vw',
+            height: '100vh',
+            background: 'rgba(0, 0, 0, 0.5)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 1000,
+            backdropFilter: 'blur(4px)'
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              background: 'var(--panel)',
+              padding: '2rem',
+              borderRadius: '20px',
+              boxShadow: 'var(--shadow-hover)',
+              maxWidth: '400px',
+              width: '90%',
+              animation: 'slideInUp 0.4s ease-out'
+            }}
+          >
+            <h3 style={{ 
+              color: 'var(--text-accent)',
+              marginBottom: '1rem',
+              marginTop: 0
+            }}>
+              {selectedSkill.name}
+            </h3>
+            
+            <div style={{ marginBottom: '1.5rem', fontSize: '0.95rem', lineHeight: '1.8' }}>
+              <p style={{ margin: '0.5rem 0' }}>
+                <strong>Status:</strong> <span style={{
+                  textTransform: 'uppercase',
+                  fontWeight: '600',
+                  color: selectedSkill.status === 'green' ? '#10b981' : selectedSkill.status === 'yellow' ? '#f59e0b' : '#ef4444'
+                }}>{selectedSkill.status}</span>
+              </p>
+              <p style={{ margin: '0.5rem 0' }}>
+                <strong>Importance:</strong> {selectedSkill.importance}
+              </p>
+              <p style={{ margin: '0.5rem 0' }}>
+                <strong>Core Level:</strong> {selectedSkill.coreLevel}
+              </p>
+              <p style={{ margin: '0.5rem 0', color: 'var(--text-muted)' }}>
+                <strong>Last Practiced:</strong> {new Date(selectedSkill.lastPracticed).toLocaleDateString()}
+              </p>
+            </div>
+
+            <button
+              onClick={() => {
+                onMarkAsPracticed(selectedSkill.id);
+                setSelectedSkill(null);
+              }}
+              style={{
+                width: '100%',
+                padding: '0.75rem',
+                background: 'var(--gradient-primary)',
+                color: 'white',
+                border: 'none',
+                borderRadius: '12px',
+                fontWeight: '600',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.transform = 'translateY(-2px)';
+                e.target.style.boxShadow = 'var(--shadow-hover)';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.transform = 'translateY(0)';
+                e.target.style.boxShadow = 'var(--shadow)';
+              }}
+            >
+              ✓ Mark as Practiced
+            </button>
+
+            <button
+              onClick={() => setSelectedSkill(null)}
+              style={{
+                width: '100%',
+                padding: '0.75rem',
+                marginTop: '0.75rem',
+                background: 'transparent',
+                color: 'var(--text-muted)',
+                border: '2px solid var(--border)',
+                borderRadius: '12px',
+                fontWeight: '600',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.borderColor = 'var(--text-accent)';
+                e.target.style.color = 'var(--text-accent)';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.borderColor = 'var(--border)';
+                e.target.style.color = 'var(--text-muted)';
+              }}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
